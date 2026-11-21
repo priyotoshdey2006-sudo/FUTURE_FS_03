@@ -1,8 +1,9 @@
 
-import './App.css'
-import { useEffect, useState } from 'react'
-import AccountAccess from './components/AccountAccess'
-import { supabase } from './lib/supabaseClient'  
+import AIChatbot from "./components/AIChatbot";
+import "./App.css";
+import { useEffect, useState } from "react";
+import AccountAccess from "./components/AccountAccess";
+import { supabase } from "./lib/supabaseClient";
 
 import {
   ArrowRight,
@@ -17,104 +18,108 @@ import {
   MessageCircle,
   ExternalLink,
   Phone,
-} from 'lucide-react'
+} from "lucide-react";
 
-import { FaInstagram, FaFacebook } from 'react-icons/fa'
+import { FaInstagram, FaFacebook } from "react-icons/fa";
 
 const services = [
   {
-    number: '01',
-    title: 'Bridal Makeup',
-    description: 'Beautiful bridal looks for your most unforgettable moments.',
-    image: 'photo-1487412947147-5cebf100ffc2',
+    number: "01",
+    title: "Bridal Makeup",
+    description: "Beautiful bridal looks for your most unforgettable moments.",
+    image: "photo-1487412947147-5cebf100ffc2",
   },
   {
-    number: '02',
-    title: 'Professional Makeup',
-    description: 'Refined makeup for parties, celebrations and special occasions.',
-    image: 'photo-1522337360788-8b13dee7a37e',
+    number: "02",
+    title: "Professional Makeup",
+    description: "Refined makeup for parties, celebrations and special occasions.",
+    image: "photo-1522337360788-8b13dee7a37e",
   },
   {
-    number: '03',
-    title: 'Skin Care',
-    description: 'Personalized beauty treatments for a fresh, radiant look.',
-    image: 'photo-1570172619644-dfd03ed5d881',
+    number: "03",
+    title: "Skin Care",
+    description: "Personalized beauty treatments for a fresh, radiant look.",
+    image: "photo-1570172619644-dfd03ed5d881",
   },
   {
-    number: '04',
-    title: 'Hair Styling',
-    description: 'Elegant hairstyles and professional hair care.',
-    image: 'photo-1560066984-138dadb4c035',
+    number: "04",
+    title: "Hair Styling",
+    description: "Elegant hairstyles and professional hair care.",
+    image: "photo-1560066984-138dadb4c035",
   },
   {
-    number: '05',
-    title: 'Mehendi',
-    description: 'Beautiful traditional designs for your special celebrations.',
-    image: 'photo-1610992015732-2449b76344bc',
+    number: "05",
+    title: "Mehendi",
+    description: "Beautiful traditional designs for your special celebrations.",
+    image: "photo-1610992015732-2449b76344bc",
   },
   {
-    number: '06',
-    title: 'Beauty Packages',
-    description: 'Thoughtfully combined services for your complete makeover.',
-    image: 'photo-1600948836101-f9ffda59d250',
+    number: "06",
+    title: "Beauty Packages",
+    description: "Thoughtfully combined services for your complete makeover.",
+    image: "photo-1600948836101-f9ffda59d250",
   },
-]
+];
 
 const gallery = [
-  'photo-1534528741775-53994a69daeb',
-  'photo-1524504388940-b1c1722653e1',
-  'photo-1529139574466-a303027c1d8b',
-]
+  "photo-1534528741775-53994a69daeb",
+  "photo-1524504388940-b1c1722653e1",
+  "photo-1529139574466-a303027c1d8b",
+];
 
-const instagramUrl = 'https://www.instagram.com/moynamondal_24680/'
-const facebookUrl = 'https://www.facebook.com/share/19Yz2kV2qP/'
-const whatsappUrl = 'https://wa.me/918116913003'
-const phoneUrl = 'tel:+918116913003'
+const instagramUrl = "https://www.instagram.com/moynamondal_24680/";
+const facebookUrl = "https://www.facebook.com/share/19Yz2kV2qP/";
+const whatsappUrl = "https://wa.me/918116913003";
+const phoneUrl = "tel:+918116913003";
+
 const mapsUrl =
-  'https://www.google.com/maps/search/?api=1&query=Abhilasha+Ladies+Beauty+Parlour+near+Rabindrapally+Indoor+Stadium+Suri+Birbhum+West+Bengal+731101'
+  "https://www.google.com/maps/search/?api=1&query=Abhilasha+Ladies+Beauty+Parlour+near+Rabindrapally+Indoor+Stadium+Suri+Birbhum+West+Bengal+731101";
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [showAccount, setShowAccount] = useState(false)
-  const [currentUser, setCurrentUser] = useState(null)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showAccount, setShowAccount] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setCurrentUser(session?.user ?? null)
-    })
+      setCurrentUser(session?.user ?? null);
+    });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setCurrentUser(session?.user ?? null)
-    })
+      setCurrentUser(session?.user ?? null);
+    });
 
-    return () => subscription.unsubscribe()
-  }, [])
+    return () => subscription.unsubscribe();
+  }, []);
 
-  const closeMenu = () => setMenuOpen(false)
+  const closeMenu = () => setMenuOpen(false);
+
   const handleLogout = async () => {
-  const { error } = await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut();
 
-  if (error) {
-    alert(error.message)
-    return
-  }
+    if (error) {
+      alert(error.message);
+      return;
+    }
 
-  setCurrentUser(null)
-  alert('You have been logged out successfully.')
-}
+    setCurrentUser(null);
+    alert("You have been logged out successfully.");
+  };
+
   return (
     <main>
       {/* NAVIGATION */}
       <nav className="navbar">
         <a className="brand" href="#home" onClick={closeMenu}>
-  <img
-    src="/images/abhilasha-logo.png"
-    alt="Abhilasha Beauty Academy Logo"
-    className="brand-logo"
-  />
-</a>
+          <img
+            src="/images/abhilasha-logo.png"
+            alt="Abhilasha Beauty Academy Logo"
+            className="brand-logo"
+          />
+        </a>
+
         <button
           className="menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -124,8 +129,8 @@ function App() {
           {menuOpen ? <X /> : <Menu />}
         </button>
 
-        <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-          {['Home', 'Services', 'About', 'Gallery', 'Contact'].map((item) => (
+        <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
+          {["Home", "Services", "About", "Gallery", "Contact"].map((item) => (
             <li key={item}>
               <a href={`#${item.toLowerCase()}`} onClick={closeMenu}>
                 {item}
@@ -135,24 +140,24 @@ function App() {
         </ul>
 
         <div className="nav-actions">
-  <button
-  className="nav-account-button"
-  onClick={() => {
-    if (currentUser) {
-      handleLogout()
-    } else {
-      setShowAccount(true)
-    }
-  }}
->
-  {currentUser ? 'Logout' : 'Sign In'}
-</button>
+          <button
+            className="nav-account-button"
+            onClick={() => {
+              if (currentUser) {
+                handleLogout();
+              } else {
+                setShowAccount(true);
+              }
+            }}
+          >
+            {currentUser ? "Logout" : "Sign In"}
+          </button>
 
-  <a className="nav-booking" href="#contact">
-    <CalendarDays size={16} />
-    Book Appointment
-  </a>
-</div>
+          <a className="nav-booking" href="#contact">
+            <CalendarDays size={16} />
+            Book Appointment
+          </a>
+        </div>
       </nav>
 
       {/* HERO */}
@@ -446,16 +451,21 @@ function App() {
       >
         <MessageCircle size={25} />
       </a>
-         {showAccount && (
+
+      {/* ACCOUNT ACCESS */}
+      {showAccount && (
         <AccountAccess
           onClose={() => setShowAccount(false)}
           onLogin={(user) => {
-            setCurrentUser(user)
+            setCurrentUser(user);
           }}
         />
       )}
+
+      {/* AI CHATBOT */}
+      <AIChatbot />
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
